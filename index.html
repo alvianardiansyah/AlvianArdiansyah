@@ -1,0 +1,1091 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Alvian Ardiansyah - Informatics Engineer</title>
+    <link rel="icon" href="images/logo2.png" type="image/png" />
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vanta@latest/dist/vanta.net.min.js"></script>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"
+    />
+    <script src="https://unpkg.com/@lottiefiles/lottie-player@latest/dist/lottie-player.js"></script>
+    <script src="https://unpkg.com/@lottiefiles/lottie-interactivity@latest/dist/lottie-interactivity.min.js"></script>
+    <style>
+      @import url("https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap");
+
+      body {
+        font-family: "Poppins", sans-serif;
+        overflow-x: hidden;
+        scroll-behavior: smooth;
+      }
+
+      #vanta-bg {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        z-index: -1;
+      }
+
+      .card-3d {
+        transform-style: preserve-3d;
+        transition: all 0.5s ease;
+        perspective: 1000px;
+      }
+
+      .card-3d:hover {
+        transform: rotateY(10deg) rotateX(5deg) translateY(-10px);
+        box-shadow: 0 30px 50px rgba(0, 0, 0, 0.3);
+      }
+
+      .floating {
+        animation: floating 3s ease-in-out infinite;
+      }
+
+      @keyframes floating {
+        0% {
+          transform: translateY(0px);
+        }
+        50% {
+          transform: translateY(-15px);
+        }
+        100% {
+          transform: translateY(0px);
+        }
+      }
+
+      .skill-bar {
+        height: 10px;
+        border-radius: 5px;
+        background: linear-gradient(90deg, #3b82f6, #8b5cf6);
+        position: relative;
+        overflow: hidden;
+      }
+
+      .skill-bar::after {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        height: 100%;
+        width: 100%;
+        background: linear-gradient(90deg, #8b5cf6, #3b82f6);
+        animation: shine 3s infinite;
+      }
+
+      @keyframes shine {
+        0% {
+          transform: translateX(-100%);
+        }
+        100% {
+          transform: translateX(100%);
+        }
+      }
+
+      .hobby-icon {
+        transition: all 0.3s ease;
+        transform-style: preserve-3d;
+      }
+
+      .hobby-icon:hover {
+        transform: scale(1.2) rotateY(20deg);
+      }
+
+      .social-icon {
+        transition: all 0.3s ease;
+        transform-style: preserve-3d;
+      }
+
+      .social-icon:hover {
+        transform: translateY(-5px) rotateY(15deg);
+      }
+
+      .section {
+        opacity: 0;
+        transform: translateY(50px);
+        transition: all 0.8s ease;
+      }
+
+      .section.visible {
+        opacity: 1;
+        transform: translateY(0);
+      }
+
+      .icon-3d {
+        transform-style: preserve-3d;
+        transition: all 0.5s ease;
+      }
+
+      .icon-3d:hover {
+        transform: rotateY(180deg) scale(1.2);
+      }
+
+      .gradient-text {
+        background: linear-gradient(90deg, #3b82f6, #8b5cf6);
+        -webkit-background-clip: text;
+        background-clip: text;
+        color: transparent;
+      }
+
+      .timeline-item {
+        position: relative;
+        padding-left: 30px;
+        margin-bottom: 30px;
+      }
+
+      .timeline-item:before {
+        content: "";
+        position: absolute;
+        left: 0;
+        top: 5px;
+        width: 16px;
+        height: 16px;
+        border-radius: 50%;
+        background: linear-gradient(135deg, #3b82f6, #8b5cf6);
+        border: 3px solid #1e293b;
+      }
+
+      .timeline-item:after {
+        content: "";
+        position: absolute;
+        left: 7px;
+        top: 21px;
+        width: 2px;
+        height: calc(100% - 16px);
+        background: #3b82f6;
+      }
+
+      .timeline-item:last-child:after {
+        display: none;
+      }
+
+      .glow {
+        box-shadow: 0 0 15px rgba(59, 130, 246, 0.5);
+      }
+
+      .parallax {
+        background-attachment: fixed;
+        background-position: center;
+        background-repeat: no-repeat;
+        background-size: cover;
+      }
+    </style>
+  </head>
+  <body class="bg-gray-900 text-white">
+    <div id="vanta-bg"></div>
+
+    <!-- Navigation -->
+    <nav
+      class="fixed w-full z-50 bg-gray-900 bg-opacity-80 backdrop-filter backdrop-blur-lg shadow-lg"
+    >
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="flex items-center justify-between h-16">
+          <div class="flex items-center">
+            <div class="flex-shrink-0">
+              <span class="text-xl font-bold gradient-text"
+                >Alvian Ardiansyah</span
+              >
+            </div>
+          </div>
+          <div class="hidden md:block">
+            <div class="ml-10 flex items-baseline space-x-4">
+              <a
+                href="#about"
+                class="px-3 py-2 rounded-md text-sm font-medium hover:text-blue-400 transition hover:bg-gray-800"
+                >About</a
+              >
+              <a
+                href="#education"
+                class="px-3 py-2 rounded-md text-sm font-medium hover:text-blue-400 transition hover:bg-gray-800"
+                >Education</a
+              >
+              <a
+                href="#skills"
+                class="px-3 py-2 rounded-md text-sm font-medium hover:text-blue-400 transition hover:bg-gray-800"
+                >Skills</a
+              >
+              <a
+                href="#hobbies"
+                class="px-3 py-2 rounded-md text-sm font-medium hover:text-blue-400 transition hover:bg-gray-800"
+                >Hobbies</a
+              >
+              <a
+                href="#contact"
+                class="px-3 py-2 rounded-md text-sm font-medium hover:text-blue-400 transition hover:bg-gray-800"
+                >Contact</a
+              >
+            </div>
+          </div>
+          <div class="md:hidden">
+            <button
+              id="menu-toggle"
+              class="text-gray-300 hover:text-white focus:outline-none"
+            >
+              <svg
+                class="h-6 w-6"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="M4 6h16M4 12h16M4 18h16"
+                ></path>
+              </svg>
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Mobile menu -->
+      <div id="mobile-menu" class="hidden md:hidden bg-gray-800 bg-opacity-90">
+        <div class="px-2 pt-2 pb-3 space-y-1 sm:px-3">
+          <a
+            href="#about"
+            class="block px-3 py-2 rounded-md text-base font-medium hover:text-blue-400 transition hover:bg-gray-700"
+            >About</a
+          >
+          <a
+            href="#education"
+            class="block px-3 py-2 rounded-md text-base font-medium hover:text-blue-400 transition hover:bg-gray-700"
+            >Education</a
+          >
+          <a
+            href="#skills"
+            class="block px-3 py-2 rounded-md text-base font-medium hover:text-blue-400 transition hover:bg-gray-700"
+            >Skills</a
+          >
+          <a
+            href="#hobbies"
+            class="block px-3 py-2 rounded-md text-base font-medium hover:text-blue-400 transition hover:bg-gray-700"
+            >Hobbies</a
+          >
+          <a
+            href="#contact"
+            class="block px-3 py-2 rounded-md text-base font-medium hover:text-blue-400 transition hover:bg-gray-700"
+            >Contact</a
+          >
+        </div>
+      </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section
+      class="min-h-screen flex items-center justify-center relative overflow-hidden"
+    >
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20 text-center">
+        <div class="floating">
+          <div class="relative inline-block">
+            <img
+              src="images/foto.jpg"
+              alt="Profile"
+              class="w-40 h-40 rounded-full mx-auto border-4 border-blue-400 shadow-xl glow"
+            />
+            <div
+              class="absolute -bottom-2 -right-2 bg-blue-500 rounded-full p-2 shadow-lg"
+            >
+              <lottie-player
+                src="https://assets6.lottiefiles.com/packages/lf20_3rwasyjy.json"
+                background="transparent"
+                speed="1"
+                style="width: 40px; height: 40px"
+                loop
+                autoplay
+              ></lottie-player>
+            </div>
+          </div>
+        </div>
+        <h1 class="text-5xl md:text-6xl font-bold mt-8 mb-4 gradient-text">
+          Alvian Ardiansyah
+        </h1>
+        <h2 class="text-2xl md:text-3xl font-semibold text-gray-300 mb-6">
+          Informatics Engineering
+        </h2>
+        <p class="text-lg md:text-xl text-gray-300 max-w-3xl mx-auto mb-8">
+          Aspiring Artificial Intelligence & Data Analytics Developer from Muna,
+          Indonesia
+        </p>
+        <div class="flex justify-center space-x-4">
+          <a
+            href="#about"
+            class="px-8 py-3 bg-gradient-to-r from-blue-500 to-purple-600 rounded-full font-semibold hover:from-blue-600 hover:to-purple-700 transition transform hover:scale-105 shadow-lg flex items-center"
+          >
+            <lottie-player
+              src="https://assets6.lottiefiles.com/packages/lf20_3rwasyjy.json"
+              background="transparent"
+              speed="1"
+              style="width: 24px; height: 24px; margin-right: 8px"
+              loop
+              autoplay
+            ></lottie-player>
+            Explore More
+          </a>
+          <a
+            href="#contact"
+            class="px-8 py-3 border-2 border-blue-400 rounded-full font-semibold hover:bg-blue-400 hover:bg-opacity-20 transition transform hover:scale-105 flex items-center"
+          >
+            <lottie-player
+              src="https://assets6.lottiefiles.com/packages/lf20_5tkzkblw.json"
+              background="transparent"
+              speed="1"
+              style="width: 24px; height: 24px; margin-right: 8px"
+              loop
+              autoplay
+            ></lottie-player>
+            Contact Me
+          </a>
+        </div>
+        <div class="mt-12 flex justify-center space-x-6">
+          <a
+            href="#"
+            class="social-icon bg-blue-600 bg-opacity-20 p-3 rounded-full hover:bg-blue-600 hover:bg-opacity-40"
+          >
+            <i class="fab fa-facebook-f text-blue-400 text-xl"></i>
+          </a>
+          <a
+            href="#"
+            class="social-icon bg-pink-600 bg-opacity-20 p-3 rounded-full hover:bg-pink-600 hover:bg-opacity-40"
+          >
+            <i class="fab fa-instagram text-pink-400 text-xl"></i>
+          </a>
+          <a
+            href="#"
+            class="social-icon bg-blue-400 bg-opacity-20 p-3 rounded-full hover:bg-blue-400 hover:bg-opacity-40"
+          >
+            <i class="fab fa-twitter text-blue-300 text-xl"></i>
+          </a>
+          <a
+            href="#"
+            class="social-icon bg-red-600 bg-opacity-20 p-3 rounded-full hover:bg-red-600 hover:bg-opacity-40"
+          >
+            <i class="fab fa-youtube text-red-400 text-xl"></i>
+          </a>
+          <a
+            href="#"
+            class="social-icon bg-blue-600 bg-opacity-20 p-3 rounded-full hover:bg-blue-600 hover:bg-opacity-40"
+          >
+            <i class="fab fa-github text-blue-400 text-xl"></i>
+          </a>
+        </div>
+      </div>
+      <div class="absolute bottom-10 left-0 right-0 flex justify-center">
+        <a href="#about" class="animate-bounce">
+          <svg
+            class="w-8 h-8 text-blue-400"
+            fill="none"
+            stroke="currentColor"
+            viewBox="0 0 24 24"
+          >
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              d="M19 14l-7 7m0 0l-7-7m7 7V3"
+            ></path>
+          </svg>
+        </a>
+      </div>
+    </section>
+
+    <!-- About Section -->
+    <section
+      id="about"
+      class="py-20 px-4 sm:px-6 lg:px-8 bg-gray-800 bg-opacity-50 backdrop-filter backdrop-blur-lg section"
+    >
+      <div class="max-w-7xl mx-auto">
+        <h2
+          class="text-3xl md:text-4xl font-bold mb-12 text-center gradient-text"
+        >
+          <span class="border-b-4 border-blue-400 pb-2">About Me</span>
+        </h2>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
+          <div
+            class="card-3d bg-gray-800 bg-opacity-70 p-8 rounded-xl shadow-xl glow"
+          >
+            <h3
+              class="text-2xl font-semibold mb-4 text-blue-400 flex items-center"
+            >
+              <lottie-player
+                src="https://assets6.lottiefiles.com/packages/lf20_5tkzkblw.json"
+                background="transparent"
+                speed="1"
+                style="width: 32px; height: 32px; margin-right: 12px"
+                loop
+                autoplay
+              ></lottie-player>
+              Who am I?
+            </h3>
+            <p class="text-gray-300 mb-6">
+              I am an Informatics Engineering student at Halu Oleo University. I
+              come from Muna and am very interested in the world of technology,
+              especially in the field of Artificial Intelligence and data
+              processing. Therefore, I hope to become an AI/ML Developer or Data
+              Engineer.
+            </p>
+            <div class="flex flex-wrap gap-4">
+              <div
+                class="bg-gray-700 bg-opacity-50 px-4 py-2 rounded-full flex items-center"
+              >
+                <span>📍 Kendari, Indonesia</span>
+              </div>
+              <div
+                class="bg-gray-700 bg-opacity-50 px-4 py-2 rounded-full flex items-center"
+              >
+                <span>🎓 Halu Oleo University</span>
+              </div>
+              <div
+                class="bg-gray-700 bg-opacity-50 px-4 py-2 rounded-full flex items-center"
+              >
+                <span>💻 AI/ML Developer</span>
+              </div>
+            </div>
+          </div>
+          <div class="relative">
+            <div
+              class="card-3d bg-gradient-to-br from-blue-500 to-purple-600 p-1 rounded-xl glow"
+            >
+              <div class="bg-gray-900 rounded-lg p-6 h-full">
+                <h3
+                  class="text-2xl font-semibold mb-4 text-blue-400 flex items-center"
+                >
+                  <lottie-player
+                    src="https://assets6.lottiefiles.com/packages/lf20_5tkzkblw.json"
+                    background="transparent"
+                    speed="1"
+                    style="width: 32px; height: 32px; margin-right: 12px"
+                    loop
+                    autoplay
+                  ></lottie-player>
+                  Achievements
+                </h3>
+                <div class="space-y-4">
+                  <div class="flex items-start">
+                    <div
+                      class="bg-blue-500 bg-opacity-20 p-3 rounded-full mr-4"
+                    >
+                      <i class="fas fa-award text-yellow-400"></i>
+                    </div>
+                    <div>
+                      <h4 class="font-semibold">
+                        Artificial Intelligence For Junior Developer
+                      </h4>
+                      <p class="text-gray-400">Huawei Talent</p>
+                    </div>
+                  </div>
+                  <div class="flex items-start">
+                    <div
+                      class="bg-purple-500 bg-opacity-20 p-3 rounded-full mr-4"
+                    >
+                      <i class="fas fa-certificate text-purple-400"></i>
+                    </div>
+                    <div>
+                      <h4 class="font-semibold">
+                        Certificate of Basic Programming C
+                      </h4>
+                      <p class="text-gray-400">Dicoding Academy</p>
+                    </div>
+                  </div>
+                  <div class="flex items-start">
+                    <div
+                      class="bg-indigo-500 bg-opacity-20 p-3 rounded-full mr-4"
+                    >
+                      <i class="fas fa-trophy text-indigo-400"></i>
+                    </div>
+                    <div>
+                      <h4 class="font-semibold">
+                        Roadshow Gerakan Nasional 1000 Startup Digital
+                      </h4>
+                      <p class="text-gray-400">Hub 11 - Sulawesi Tenggara</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Education Section -->
+    <section
+      id="education"
+      class="py-20 px-4 sm:px-6 lg:px-8 bg-gray-900 bg-opacity-50 backdrop-filter backdrop-blur-lg section"
+    >
+      <div class="max-w-7xl mx-auto">
+        <h2
+          class="text-3xl md:text-4xl font-bold mb-12 text-center gradient-text"
+        >
+          <span class="border-b-4 border-blue-400 pb-2">Education</span>
+        </h2>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+          <div
+            class="card-3d bg-gray-800 bg-opacity-70 p-8 rounded-xl shadow-xl glow"
+          >
+            <div class="flex items-start">
+              <div class="bg-blue-500 bg-opacity-20 p-3 rounded-full mr-6">
+                <lottie-player
+                  src="https://assets6.lottiefiles.com/packages/lf20_5tkzkblw.json"
+                  background="transparent"
+                  speed="1"
+                  style="width: 32px; height: 32px"
+                  loop
+                  autoplay
+                ></lottie-player>
+              </div>
+              <div>
+                <h3 class="text-2xl font-semibold mb-2 text-blue-400">
+                  Universitas Halu Oleo
+                </h3>
+                <p class="text-gray-400 mb-2">Informatics Engineering</p>
+                <p class="text-gray-300">2022 - Present</p>
+                <p class="text-gray-300 mt-4">Kendari, Southeast Sulawesi</p>
+              </div>
+            </div>
+          </div>
+          <div
+            class="card-3d bg-gray-800 bg-opacity-70 p-8 rounded-xl shadow-xl glow"
+          >
+            <div class="flex items-start">
+              <div class="bg-purple-500 bg-opacity-20 p-3 rounded-full mr-6">
+                <lottie-player
+                  src="https://assets6.lottiefiles.com/packages/lf20_5tkzkblw.json"
+                  background="transparent"
+                  speed="1"
+                  style="width: 32px; height: 32px"
+                  loop
+                  autoplay
+                ></lottie-player>
+              </div>
+              <div>
+                <h3 class="text-2xl font-semibold mb-2 text-purple-400">
+                  SMA Negeri 1 Raha
+                </h3>
+                <p class="text-gray-400 mb-2">Science Major</p>
+                <p class="text-gray-300">2019 - 2022</p>
+                <p class="text-gray-300 mt-4">Muna, Southeast Sulawesi</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Skills Section -->
+    <section
+      id="skills"
+      class="py-20 px-4 sm:px-6 lg:px-8 bg-gray-800 bg-opacity-50 backdrop-filter backdrop-blur-lg section"
+    >
+      <div class="max-w-7xl mx-auto">
+        <h2
+          class="text-3xl md:text-4xl font-bold mb-12 text-center gradient-text"
+        >
+          <span class="border-b-4 border-blue-400 pb-2">Skills</span>
+        </h2>
+
+        <!-- Software Skills Section -->
+        <div class="mb-16">
+          <h3
+            class="text-2xl md:text-3xl font-bold mb-8 text-center text-blue-400"
+          >
+            <span class="border-b-2 border-blue-400 pb-1">Software Skills</span>
+          </h3>
+
+          <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+            <div
+              class="card-3d bg-gray-800 bg-opacity-70 p-8 rounded-xl shadow-xl glow"
+            >
+              <div class="flex justify-center mb-6">
+                <div class="bg-blue-500 bg-opacity-20 p-4 rounded-full icon-3d">
+                  <i class="fab fa-code text-blue-400 text-3xl"></i>
+                </div>
+              </div>
+              <h3 class="text-xl font-semibold text-center mb-4 text-blue-400">
+                Adobe Animate
+              </h3>
+              <div class="text-center mb-4">
+                <span class="text-gray-400">Intermediate</span>
+              </div>
+              <div class="w-full bg-gray-700 rounded-full h-2 mb-6">
+                <div
+                  class="bg-blue-500 h-2 rounded-full"
+                  style="width: 70%"
+                ></div>
+              </div>
+              <p class="text-gray-300 text-center">
+                Animation creation and interactive content development.
+              </p>
+            </div>
+
+            <div
+              class="card-3d bg-gray-800 bg-opacity-70 p-8 rounded-xl shadow-xl glow"
+            >
+              <div class="flex justify-center mb-6">
+                <div
+                  class="bg-indigo-500 bg-opacity-20 p-4 rounded-full icon-3d"
+                >
+                  <i class="fas fa-robot text-indigo-400 text-3xl"></i>
+                </div>
+              </div>
+              <h3
+                class="text-xl font-semibold text-center mb-4 text-indigo-400"
+              >
+                Roboflow
+              </h3>
+              <div class="text-center mb-4">
+                <span class="text-gray-400">Intermediate</span>
+              </div>
+              <div class="w-full bg-gray-700 rounded-full h-2 mb-6">
+                <div
+                  class="bg-indigo-500 h-2 rounded-full"
+                  style="width: 65%"
+                ></div>
+              </div>
+              <p class="text-gray-300 text-center">
+                Computer vision model training and dataset management.
+              </p>
+            </div>
+
+            <div
+              class="card-3d bg-gray-800 bg-opacity-70 p-8 rounded-xl shadow-xl glow"
+            >
+              <div class="flex justify-center mb-6">
+                <div class="bg-pink-500 bg-opacity-20 p-4 rounded-full icon-3d">
+                  <i class="fab fa-figma text-pink-400 text-3xl"></i>
+                </div>
+              </div>
+              <h3 class="text-xl font-semibold text-center mb-4 text-pink-400">
+                Figma
+              </h3>
+              <div class="text-center mb-4">
+                <span class="text-gray-400">Beginner</span>
+              </div>
+              <div class="w-full bg-gray-700 rounded-full h-2 mb-6">
+                <div
+                  class="bg-pink-500 h-2 rounded-full"
+                  style="width: 40%"
+                ></div>
+              </div>
+              <p class="text-gray-300 text-center">
+                UI/UX design and prototyping.
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Programming Skills Section -->
+        <div>
+          <h3
+            class="text-2xl md:text-3xl font-bold mb-8 text-center text-blue-400"
+          >
+            <span class="border-b-2 border-blue-400 pb-1"
+              >Programming Skills</span
+            >
+          </h3>
+
+          <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
+            <div
+              class="card-3d bg-gray-800 bg-opacity-70 p-6 rounded-xl shadow-xl glow"
+            >
+              <div class="flex items-center mb-4">
+                <div class="bg-yellow-500 bg-opacity-20 p-3 rounded-full mr-4">
+                  <i class="fab fa-python text-yellow-400"></i>
+                </div>
+                <h3 class="text-lg font-semibold text-yellow-400">Python</h3>
+              </div>
+              <div class="w-full bg-gray-700 rounded-full h-2">
+                <div
+                  class="bg-yellow-500 h-2 rounded-full"
+                  style="width: 70%"
+                ></div>
+              </div>
+              <p class="text-gray-400 text-sm mt-2">Intermediate</p>
+            </div>
+
+            <div
+              class="card-3d bg-gray-800 bg-opacity-70 p-6 rounded-xl shadow-xl glow"
+            >
+              <div class="flex items-center mb-4">
+                <div class="bg-purple-500 bg-opacity-20 p-3 rounded-full mr-4">
+                  <i class="fab fa-php text-purple-400"></i>
+                </div>
+                <h3 class="text-lg font-semibold text-purple-400">PHP</h3>
+              </div>
+              <div class="w-full bg-gray-700 rounded-full h-2">
+                <div
+                  class="bg-purple-500 h-2 rounded-full"
+                  style="width: 65%"
+                ></div>
+              </div>
+              <p class="text-gray-400 text-sm mt-2">Intermediate</p>
+            </div>
+
+            <div
+              class="card-3d bg-gray-800 bg-opacity-70 p-6 rounded-xl shadow-xl glow"
+            >
+              <div class="flex items-center mb-4">
+                <div class="bg-blue-500 bg-opacity-20 p-3 rounded-full mr-4">
+                  <i class="fab fa-html5 text-blue-400"></i>
+                </div>
+                <h3 class="text-lg font-semibold text-blue-400">HTML/CSS/JS</h3>
+              </div>
+              <div class="w-full bg-gray-700 rounded-full h-2">
+                <div
+                  class="bg-blue-500 h-2 rounded-full"
+                  style="width: 75%"
+                ></div>
+              </div>
+              <p class="text-gray-400 text-sm mt-2">Intermediate</p>
+            </div>
+
+            <div
+              class="card-3d bg-gray-800 bg-opacity-70 p-6 rounded-xl shadow-xl glow"
+            >
+              <div class="flex items-center mb-4">
+                <div class="bg-red-500 bg-opacity-20 p-3 rounded-full mr-4">
+                  <i class="fas fa-code text-red-400"></i>
+                </div>
+                <h3 class="text-lg font-semibold text-red-400">C</h3>
+              </div>
+              <div class="w-full bg-gray-700 rounded-full h-2">
+                <div
+                  class="bg-red-500 h-2 rounded-full"
+                  style="width: 50%"
+                ></div>
+              </div>
+              <p class="text-gray-400 text-sm mt-2">Basic</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Hobbies Section -->
+    <section
+      id="hobbies"
+      class="py-20 px-4 sm:px-6 lg:px-8 bg-gray-900 bg-opacity-50 backdrop-filter backdrop-blur-lg section"
+    >
+      <div class="max-w-7xl mx-auto">
+        <h2
+          class="text-3xl md:text-4xl font-bold mb-12 text-center gradient-text"
+        >
+          <span class="border-b-4 border-blue-400 pb-2">Hobbies</span>
+        </h2>
+        <div class="grid grid-cols-1 sm:grid-cols-3 gap-8">
+          <div
+            class="card-3d bg-gray-800 bg-opacity-70 p-8 rounded-xl shadow-xl text-center glow"
+          >
+            <div
+              class="hobby-icon bg-blue-500 bg-opacity-20 p-6 rounded-full inline-block mb-6"
+            >
+              <i class="fas fa-futbol text-blue-400 text-4xl"></i>
+            </div>
+            <h3 class="text-xl font-semibold mb-4 text-blue-400">Futsal</h3>
+            <p class="text-gray-300">
+              Enjoy playing futsal with friends to stay active and build
+              teamwork.
+            </p>
+          </div>
+
+          <div
+            class="card-3d bg-gray-800 bg-opacity-70 p-8 rounded-xl shadow-xl text-center glow"
+          >
+            <div
+              class="hobby-icon bg-purple-500 bg-opacity-20 p-6 rounded-full inline-block mb-6"
+            >
+              <i class="fas fa-table-tennis text-purple-400 text-4xl"></i>
+            </div>
+            <h3 class="text-xl font-semibold mb-4 text-purple-400">
+              Badminton
+            </h3>
+            <p class="text-gray-300">
+              Playing badminton to improve reflexes and physical fitness.
+            </p>
+          </div>
+
+          <div
+            class="card-3d bg-gray-800 bg-opacity-70 p-8 rounded-xl shadow-xl text-center glow"
+          >
+            <div
+              class="hobby-icon bg-green-500 bg-opacity-20 p-6 rounded-full inline-block mb-6"
+            >
+              <i class="fas fa-running text-green-400 text-4xl"></i>
+            </div>
+            <h3 class="text-xl font-semibold mb-4 text-green-400">Jogging</h3>
+            <p class="text-gray-300">
+              Morning jogs to clear the mind and maintain cardiovascular health.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section
+      id="contact"
+      class="py-20 px-4 sm:px-6 lg:px-8 bg-gray-800 bg-opacity-50 backdrop-filter backdrop-blur-lg section"
+    >
+      <div class="max-w-7xl mx-auto">
+        <h2
+          class="text-3xl md:text-4xl font-bold mb-12 text-center gradient-text"
+        >
+          <span class="border-b-4 border-blue-400 pb-2">Contact Me</span>
+        </h2>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-12">
+          <div
+            class="card-3d bg-gray-800 bg-opacity-70 p-8 rounded-xl shadow-xl glow"
+          >
+            <h3 class="text-2xl font-semibold mb-6 text-blue-400">
+              Get in Touch
+            </h3>
+            <form id="contact-form" class="space-y-6">
+              <div>
+                <label for="name" class="block text-gray-300 mb-2">Name</label>
+                <input
+                  type="text"
+                  id="name"
+                  class="w-full px-4 py-3 bg-gray-700 border border-gray-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  placeholder="Your Name"
+                />
+              </div>
+              <div>
+                <label for="email" class="block text-gray-300 mb-2"
+                  >Email</label
+                >
+                <input
+                  type="email"
+                  id="email"
+                  class="w-full px-4 py-3 bg-gray-700 border border-gray-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  placeholder="Your Email"
+                />
+              </div>
+              <div>
+                <label for="message" class="block text-gray-300 mb-2"
+                  >Message</label
+                >
+                <textarea
+                  id="message"
+                  rows="5"
+                  class="w-full px-4 py-3 bg-gray-700 border border-gray-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  placeholder="Your Message"
+                ></textarea>
+              </div>
+              <button
+                type="submit"
+                class="w-full px-6 py-3 bg-gradient-to-r from-blue-500 to-purple-600 rounded-lg font-semibold hover:from-blue-600 hover:to-purple-700 transition transform hover:scale-105 flex items-center justify-center"
+              >
+                <lottie-player
+                  src="https://assets6.lottiefiles.com/packages/lf20_5tkzkblw.json"
+                  background="transparent"
+                  speed="1"
+                  style="width: 24px; height: 24px; margin-right: 8px"
+                  loop
+                  autoplay
+                ></lottie-player>
+                Send Message
+              </button>
+            </form>
+          </div>
+          <div>
+            <div
+              class="card-3d bg-gray-800 bg-opacity-70 p-8 rounded-xl shadow-xl mb-8 glow"
+            >
+              <h3 class="text-2xl font-semibold mb-6 text-blue-400">
+                Contact Information
+              </h3>
+              <div class="space-y-6">
+                <div class="flex items-start">
+                  <div class="bg-blue-500 bg-opacity-20 p-3 rounded-full mr-4">
+                    <i class="fas fa-envelope text-blue-400"></i>
+                  </div>
+                  <div>
+                    <h4 class="font-semibold text-gray-300">Email</h4>
+                    <a
+                      href="mailto:alvianardiansyah.22039@gmail.com"
+                      class="text-gray-400 hover:text-blue-400 transition"
+                      >alvianardiansyah.22039@gmail.com</a
+                    >
+                  </div>
+                </div>
+                <div class="flex items-start">
+                  <div
+                    class="bg-purple-500 bg-opacity-20 p-3 rounded-full mr-4"
+                  >
+                    <i class="fas fa-phone text-purple-400"></i>
+                  </div>
+                  <div>
+                    <h4 class="font-semibold text-gray-300">Phone</h4>
+                    <a
+                      href="https://wa.me/6281243203855"
+                      class="text-gray-400 hover:text-blue-400 transition"
+                      >+62 812 4320 3855</a
+                    >
+                  </div>
+                </div>
+                <div class="flex items-start">
+                  <div
+                    class="bg-indigo-500 bg-opacity-20 p-3 rounded-full mr-4"
+                  >
+                    <i class="fas fa-map-marker-alt text-indigo-400"></i>
+                  </div>
+                  <div>
+                    <h4 class="font-semibold text-gray-300">Location</h4>
+                    <a
+                      href="https://www.google.com/maps?q=Kendari,+Southeast+Sulawesi,+Indonesia"
+                      class="text-gray-400 hover:underline"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                    >
+                      Kendari, Southeast Sulawesi, Indonesia
+                    </a>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div
+              class="card-3d bg-gray-800 bg-opacity-70 p-8 rounded-xl shadow-xl glow"
+            >
+              <h3 class="text-2xl font-semibold mb-6 text-blue-400">
+                Social Media
+              </h3>
+              <div class="grid grid-cols-2 gap-4">
+                <a
+                  href="#"
+                  class="social-icon bg-blue-600 bg-opacity-20 p-4 rounded-lg hover:bg-blue-600 hover:bg-opacity-40 flex items-center"
+                >
+                  <i class="fab fa-facebook text-blue-400 text-xl mr-3"></i>
+                  <span>Facebook</span>
+                </a>
+                <a
+                  href="#"
+                  class="social-icon bg-pink-600 bg-opacity-20 p-4 rounded-lg hover:bg-pink-600 hover:bg-opacity-40 flex items-center"
+                >
+                  <i class="fab fa-instagram text-pink-400 text-xl mr-3"></i>
+                  <span>Instagram</span>
+                </a>
+                <a
+                  href="#"
+                  class="social-icon bg-blue-400 bg-opacity-20 p-4 rounded-lg hover:bg-blue-400 hover:bg-opacity-40 flex items-center"
+                >
+                  <i class="fab fa-twitter text-blue-300 text-xl mr-3"></i>
+                  <span>X</span>
+                </a>
+                <a
+                  href="#"
+                  class="social-icon bg-red-600 bg-opacity-20 p-4 rounded-lg hover:bg-red-600 hover:bg-opacity-40 flex items-center"
+                >
+                  <i class="fab fa-youtube text-red-400 text-xl mr-3"></i>
+                  <span>Youtube</span>
+                </a>
+                <a
+                  href="#"
+                  class="social-icon bg-gray-700 bg-opacity-20 p-4 rounded-lg hover:bg-gray-700 hover:bg-opacity-40 flex items-center"
+                >
+                  <i class="fab fa-github text-gray-300 text-xl mr-3"></i>
+                  <span>Github</span>
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Footer -->
+    <footer
+      class="py-8 px-4 sm:px-6 lg:px-8 bg-gray-900 bg-opacity-80 backdrop-filter backdrop-blur-lg"
+    >
+      <div class="max-w-7xl mx-auto">
+        <p class="border-t border-gray-800 mt-8 pt-8 text-center text-gray-500">&copy; 2025 Alvian Ardiansyah. All rights reserved.</p>
+      </div>
+    </footer>
+
+    <script>
+      // Initialize Vanta.js background
+      VANTA.NET({
+        el: "#vanta-bg",
+        mouseControls: true,
+        touchControls: true,
+        gyroControls: false,
+        minHeight: 200.0,
+        minWidth: 200.0,
+        scale: 1.0,
+        scaleMobile: 1.0,
+        color: 0x3b82f6,
+        backgroundColor: 0x111827,
+        points: 12.0,
+        maxDistance: 23.0,
+        spacing: 16.0,
+      });
+
+      // Mobile menu toggle
+      document
+        .getElementById("menu-toggle")
+        .addEventListener("click", function () {
+          document.getElementById("mobile-menu").classList.toggle("hidden");
+        });
+
+      // Smooth scrolling for navigation links
+      document.querySelectorAll('a[href^="#"]').forEach((anchor) => {
+        anchor.addEventListener("click", function (e) {
+          e.preventDefault();
+
+          document.querySelector(this.getAttribute("href")).scrollIntoView({
+            behavior: "smooth",
+          });
+
+          // Close mobile menu if open
+          document.getElementById("mobile-menu").classList.add("hidden");
+        });
+      });
+
+      // Form submission
+      document
+        .getElementById("contact-form")
+        .addEventListener("submit", function (e) {
+          e.preventDefault();
+
+          const name = document.getElementById("name").value;
+          const email = document.getElementById("email").value;
+          const message = document.getElementById("message").value;
+
+          // Here you would typically send the form data to a server
+          console.log("Form submitted:", { name, email, message });
+
+          alert("Thank you for your message! I will get back to you soon.");
+          this.reset();
+        });
+
+      // Intersection Observer for scroll animations
+      const sections = document.querySelectorAll(".section");
+
+      const observer = new IntersectionObserver(
+        (entries) => {
+          entries.forEach((entry) => {
+            if (entry.isIntersecting) {
+              entry.target.classList.add("visible");
+            }
+          });
+        },
+        {
+          threshold: 0.1,
+        }
+      );
+
+      sections.forEach((section) => {
+        observer.observe(section);
+      });
+
+      // Initialize Lottie animations
+      document.addEventListener("DOMContentLoaded", function () {
+        // This will be handled by the lottie-player elements themselves
+      });
+    </script>
+  </body>
+</html>
